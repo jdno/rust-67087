@@ -1,0 +1,20 @@
+name: rust
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rust: [stable, nightly]
+
+    steps:
+      - uses: hecrj/setup-rust-action@v1
+        with:
+          rust-version: ${{ matrix.rust }}
+
+      - uses: actions/checkout@v2
+
+      - name: cargo build
+        run: RUST_BACKTRACE=full cargo build
